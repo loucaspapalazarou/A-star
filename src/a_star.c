@@ -109,21 +109,27 @@ void trace_path(point *end, int start_x, int start_y)
         current = current->previous;
     }
 
-    printf("Path from (%d, %d) to (%d, %d) and with length %d is:\n", start_x, start_y, end->x, end->y, path_size - 1);
+    printf("Path length: %d\n", path_size - 1);
+    printf("Path [");
     for (int i = path_size - 1; i >= 0; i--)
     {
-        printf("(%d, %d) ", path[i]->y, path[i]->x);
+        printf("(%d, %d)", path[i]->y, path[i]->x);
+        if (i != 0)
+        {
+            printf(", ");
+        }
     }
-    printf("\n");
+    printf("]\n");
 }
 
-int a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic)
+void a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic)
 {
     if (strcmp(heuristic, "eucledian") != 0 && strcmp(heuristic, "manhattan") != 0)
     {
         printf("Invalid heuristic\n");
         exit(1);
     }
+    printf("Starting with %s heuristic\n", heuristic);
 
     priority_queue *fringe = create_priority_queue(rows * cols);
 
@@ -158,11 +164,11 @@ int a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int e
         {
             printf("Path found!\n");
             trace_path(point_to_expand, start_x, start_y);
-            return 1;
+            return;
         }
 
         expand(rows, cols, grid, point_to_expand, end_x, end_y, fringe, heuristic, visited);
     }
     printf("No path found\n");
-    return 0;
+    return;
 }
