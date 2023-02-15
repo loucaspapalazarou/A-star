@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct
+{
+    double time;
+    int points_explored;
+} solution;
+
 void read_file(const char *filename, int *rows, int *cols, int ***grid, int *start_x, int *start_y, int *end_x, int *end_y)
 {
     FILE *file = fopen(filename, "r");

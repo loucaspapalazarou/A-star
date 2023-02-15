@@ -1,0 +1,8 @@
+#!/bin/bash
+gcc src/*.c -lm
+for file in inputs/*.txt
+do
+    echo "************ Running for file $file ************"
+    ./a.out "$file"
+done
+rm a.out

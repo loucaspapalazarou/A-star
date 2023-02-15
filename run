@@ -1,0 +1,4 @@
+#!/bin/bash
+gcc src/*.c -lm
+./a.out default-input.txt
+rm a.out

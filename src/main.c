@@ -17,7 +17,12 @@ int main(int argc, char *argv[])
     read_file(argv[1], &rows, &cols, &grid, &start_x, &start_y, &end_x, &end_y);
 
     a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian");
+    printf("\n");
     a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan");
+    printf("\n");
+
+    // produce solutions
+    // write them to file
 
     return 0;
 }

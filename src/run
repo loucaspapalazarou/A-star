@@ -1,4 +1,0 @@
-#!/bin/bash
-gcc *.c -lm
-./a.out input.txt
-rm a.out
