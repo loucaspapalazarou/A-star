@@ -82,6 +82,10 @@ void expand(int rows, int cols, int **grid, point curr_p, int end_x, int end_y, 
     }
 }
 
+// void print_path()
+// {
+// }
+
 int a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic)
 {
     if (strcmp(heuristic, "eucledian") != 0 && strcmp(heuristic, "manhattan") != 0)
@@ -110,17 +114,20 @@ int a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int e
     enqueue(fringe, start);
     visited[start_y][start_x] = 1;
 
+    // IF SOLUTION IS FOUND, USE PREVIOUS FROM POINT TO TRACK DOWN THE PATH
     while (!is_empty(fringe))
     {
         point point_to_expand = dequeue(fringe);
-        print_priority_queue(fringe);
-        printf("Extracted (%d, %d)\n", point_to_expand.x, point_to_expand.y);
+        // printf("Extracted (%d, %d)\n", point_to_expand.x, point_to_expand.y);
 
         if (point_to_expand.x == end_x && point_to_expand.y == end_y)
         {
             printf("Path found!\n");
+            // print_path();
             return 1;
         }
         expand(rows, cols, grid, point_to_expand, end_x, end_y, fringe, heuristic, visited);
     }
+    printf("No path found\n");
+    return 0;
 }

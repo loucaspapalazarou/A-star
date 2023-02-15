@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// ADD PREVIOUS
 typedef struct
 {
     int x;
@@ -86,7 +87,7 @@ point dequeue(priority_queue *pq)
 {
     if (pq->size == 0)
     {
-        fprintf(stderr, "Priority queue is empty\n");
+        // fprintf(stderr, "Priority queue is empty\n");
         exit(1);
     }
     point min_value = pq->heap[1];
@@ -110,7 +111,7 @@ void print_priority_queue(priority_queue *pq)
 {
     if (is_empty(pq))
     {
-        printf("Priority queue is empty.\n");
+        // printf("Priority queue is empty.\n");
         return;
     }
     for (int i = 1; i <= pq->size; i++)
