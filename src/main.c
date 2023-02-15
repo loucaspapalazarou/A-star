@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
     a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian");
 
-    a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan");
+    // a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan");
 
     return 0;
 }
