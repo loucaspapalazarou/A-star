@@ -15,9 +15,8 @@ int main(int argc, char *argv[])
     int **grid;
     int start_x, start_y, end_x, end_y;
     read_file(argv[1], &rows, &cols, &grid, &start_x, &start_y, &end_x, &end_y);
-    // print_grid(rows, cols, grid);
 
-    a_star_solve(grid, start_x, start_y, end_x, end_y, "eucledian");
+    a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian");
 
     return 0;
 }
