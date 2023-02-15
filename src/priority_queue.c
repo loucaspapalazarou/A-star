@@ -5,7 +5,7 @@ typedef struct
 {
     int x;
     int y;
-    double d;
+    double cost;
 } point;
 
 typedef struct
@@ -42,11 +42,11 @@ void min_heapify(point *heap, int i, int n)
     int left = 2 * i;
     int right = 2 * i + 1;
     int smallest = i;
-    if (left <= n && heap[left].d < heap[smallest].d)
+    if (left <= n && heap[left].cost < heap[smallest].cost)
     {
         smallest = left;
     }
-    if (right <= n && heap[right].d < heap[smallest].d)
+    if (right <= n && heap[right].cost < heap[smallest].cost)
     {
         smallest = right;
     }
@@ -75,7 +75,7 @@ void enqueue(priority_queue *pq, point value)
     pq->size++;
     pq->heap[pq->size] = value;
     int i = pq->size;
-    while (i > 1 && pq->heap[i].d < pq->heap[i / 2].d)
+    while (i > 1 && pq->heap[i].cost < pq->heap[i / 2].cost)
     {
         swap(&pq->heap[i], &pq->heap[i / 2]);
         i /= 2;
@@ -113,9 +113,8 @@ void print_priority_queue(priority_queue *pq)
         printf("Priority queue is empty.\n");
         return;
     }
-    printf("Priority queue contents:\n");
     for (int i = 1; i <= pq->size; i++)
     {
-        printf("(%d, %d, %f)\n", pq->heap[i].x, pq->heap[i].y, pq->heap[i].d);
+        printf("(%d, %d, %f)\n", pq->heap[i].x, pq->heap[i].y, pq->heap[i].cost);
     }
 }

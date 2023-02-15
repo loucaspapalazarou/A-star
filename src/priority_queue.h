@@ -5,7 +5,7 @@ typedef struct
 {
     int x;
     int y;
-    double d;
+    double cost;
 } point;
 
 typedef struct

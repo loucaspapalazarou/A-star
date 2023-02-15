@@ -18,7 +18,24 @@ double heuristic_manhattan(int x1, int y1, int x2, int y2)
     return dx + dy;
 }
 
-void expand(int rows, int cols, int **grid, point curr_p, priority_queue *fringe)
+double calculate_heuristic(int x1, int y1, int x2, int y2, char *heuristic)
+{
+    if (strcmp(heuristic, "eucledian") != 0 && strcmp(heuristic, "manhattan") != 0)
+    {
+        printf("Invalid heuristic\n");
+        exit(1);
+    }
+    if (strcmp(heuristic, "eucledian") == 0)
+    {
+        return heuristic_euclidean(x1, y1, x2, y2);
+    }
+    if (strcmp(heuristic, "manhattan") == 0)
+    {
+        return heuristic_manhattan(x1, y1, x2, y2);
+    }
+}
+
+void expand(int rows, int cols, int **grid, point curr_p, int end_x, int end_y, priority_queue *fringe, char *heuristic, int **visited)
 {
     int x = curr_p.x;
     int y = curr_p.y;
@@ -28,27 +45,39 @@ void expand(int rows, int cols, int **grid, point curr_p, priority_queue *fringe
         exit(1);
     }
     // check top
-    if (y - 1 >= 0 && grid[y - 1][x] == 0)
+    if (y - 1 >= 0 && grid[y - 1][x] == 0 && visited[y - 1][x] == 0)
     {
-        point p = {x, y - 1, 0};
+        double h = calculate_heuristic(x, y - 1, end_x, end_y, heuristic);
+        double last_cost = curr_p.cost;
+        point p = {x, y - 1, h + last_cost + 1};
+        visited[y - 1][x] = 1;
         enqueue(fringe, p);
     }
-    // botton
-    if (y + 1 < rows && grid[y + 1][x] == 0)
+    // check botton
+    if (y + 1 < rows && grid[y + 1][x] == 0 && visited[y + 1][x] == 0)
     {
-        point p = {x, y + 1, 0};
+        double h = calculate_heuristic(x, y + 1, end_x, end_y, heuristic);
+        double last_cost = curr_p.cost;
+        point p = {x, y + 1, h + last_cost + 1};
+        visited[y + 1][x] = 1;
         enqueue(fringe, p);
     }
-    // left
-    if (x - 1 >= 0 && grid[y][x - 1] == 0)
+    // check left
+    if (x - 1 >= 0 && grid[y][x - 1] == 0 && visited[y][x - 1] == 0)
     {
-        point p = {x - 1, y, 0};
+        double h = calculate_heuristic(x - 1, y, end_x, end_y, heuristic);
+        double last_cost = curr_p.cost;
+        point p = {x - 1, y, h + last_cost + 1};
+        visited[y][x - 1] = 1;
         enqueue(fringe, p);
     }
-    // right
-    if (x + 1 < cols && grid[y][x + 1] == 0)
+    // check right
+    if (x + 1 < cols && grid[y][x + 1] == 0 && visited[y][x + 1] == 0)
     {
-        point p = {x + 1, y, 0};
+        double h = calculate_heuristic(x + 1, y, end_x, end_y, heuristic);
+        double last_cost = curr_p.cost;
+        point p = {x + 1, y, h + last_cost + 1};
+        visited[y][x + 1] = 1;
         enqueue(fringe, p);
     }
 }
@@ -60,21 +89,38 @@ int a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int e
         printf("Invalid heuristic\n");
         exit(1);
     }
-    printf("Heuristic: %s\n", heuristic);
-    priority_queue *fringe = create_priority_queue(10);
+
+    priority_queue *fringe = create_priority_queue(rows * cols);
+
+    int **visited = (int **)malloc(rows * sizeof(int *));
+    for (int i = 0; i < rows; i++)
+    {
+        visited[i] = (int *)malloc(cols * sizeof(int));
+    }
+
+    for (int i = 0; i < rows; i++)
+    {
+        for (int j = 0; j < cols; j++)
+        {
+            visited[i][j] = 0;
+        }
+    }
 
     point start = {start_x, start_y, 0};
     enqueue(fringe, start);
+    visited[start_y][start_x] = 1;
 
-    if (start_x == end_x && start_y == end_y)
+    while (!is_empty(fringe))
     {
-        printf("Path found!\n");
-        return 1;
+        point point_to_expand = dequeue(fringe);
+        print_priority_queue(fringe);
+        printf("Extracted (%d, %d)\n", point_to_expand.x, point_to_expand.y);
+
+        if (point_to_expand.x == end_x && point_to_expand.y == end_y)
+        {
+            printf("Path found!\n");
+            return 1;
+        }
+        expand(rows, cols, grid, point_to_expand, end_x, end_y, fringe, heuristic, visited);
     }
-
-    point point_to_expand = dequeue(fringe);
-
-    expand(rows, cols, grid, point_to_expand, fringe);
-
-    print_priority_queue(fringe);
 }

@@ -22,7 +22,7 @@ void read_file(const char *filename, int *rows, int *cols, int ***grid, int *sta
         }
     }
 
-    fscanf(file, "%d %d %d %d", start_x, start_y, end_x, end_y);
+    fscanf(file, "%d %d %d %d", start_y, start_x, end_y, end_x);
 
     fclose(file);
 }
