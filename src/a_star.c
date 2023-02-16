@@ -12,7 +12,6 @@ struct solution
 {
     double time;
     int points_explored;
-    point *end;
 };
 
 typedef struct solution solution;

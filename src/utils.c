@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "a_star.h"
+
 void read_file(const char *filename, int *rows, int *cols, int ***grid, int *start_x, int *start_y, int *end_x, int *end_y)
 {
     FILE *file = fopen(filename, "r");
@@ -38,4 +40,29 @@ void print_grid(int rows, int cols, int **grid)
         }
         printf("\n");
     }
+}
+
+void append_solution_to_csv(int rows, int cols, solution *s1, solution *s2)
+{
+    char filename[100];
+    sprintf(filename, "results.csv");
+
+    FILE *f = fopen(filename, "a"); // open the file in append mode
+    if (f == NULL)
+    {
+        printf("Error opening file\n");
+        return;
+    }
+
+    // write the headers to the file if it does not exist
+    if (ftell(f) == 0)
+    {
+        fprintf(f, "size,time-eucledian,points-explored-eucledian,time-manhattan,points-explored-manhattan\n");
+    }
+
+    // write the fields of the solution struct to the file
+    fprintf(f, "%dx%d,%.6f,%d,", rows, cols, s1->time, s1->points_explored);
+    fprintf(f, "%.6f,%d\n", s2->time, s2->points_explored);
+
+    fclose(f); // close the file
 }
