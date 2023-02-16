@@ -3,5 +3,4 @@
 ### TODO
 - Fill reamde
 - Comments
-- Find path
-- Run experiments
+- Make report
