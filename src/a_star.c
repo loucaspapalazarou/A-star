@@ -170,9 +170,9 @@ solution *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y,
         if (point_to_expand->x == end_x && point_to_expand->y == end_y)
         {
             end_time = clock();
-            sol->time = elapsed_time;
             sol->points_explored = explored_points;
             elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+            sol->time = elapsed_time;
             printf("Path found in %fs\n", elapsed_time);
             printf("Explored %d points\n", explored_points);
             // trace_path(point_to_expand, start_x, start_y);
