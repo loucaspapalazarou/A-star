@@ -16,9 +16,19 @@ int main(int argc, char *argv[])
     int start_x, start_y, end_x, end_y;
     read_file(argv[1], &rows, &cols, &grid, &start_x, &start_y, &end_x, &end_y);
 
-    a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian");
+    solution *s;
+
+    s = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian");
+    if (s != NULL)
+    {
+        printf("Solution from main. Time %f\n", s->time);
+    }
     printf("\n");
     a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan");
+    if (s != NULL)
+    {
+        printf("Solution from main. Time %f\n", s->time);
+    }
     printf("\n");
 
     // produce solutions

@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
 #include "priority_queue.h"
+#include "utils.h"
 
 #define MAX_PATH_LEN 100
 
@@ -122,12 +124,12 @@ void trace_path(point *end, int start_x, int start_y)
     printf("]\n");
 }
 
-point *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic)
+solution *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic)
 {
     if (strcmp(heuristic, "eucledian") != 0 && strcmp(heuristic, "manhattan") != 0)
     {
         printf("Invalid heuristic\n");
-        exit(1);
+        return NULL;
     }
     printf("Starting with %s heuristic\n", heuristic);
 
@@ -148,6 +150,7 @@ point *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, in
     }
 
     point *start = malloc(sizeof(point));
+    solution *sol = malloc(sizeof(solution));
     start->x = start_x;
     start->y = start_y;
     start->cost = 0;
@@ -155,7 +158,10 @@ point *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, in
     enqueue(fringe, start);
     visited[start_y][start_x] = 1;
     int explored_points = 1;
+    clock_t start_time, end_time;
+    double elapsed_time;
 
+    start_time = clock();
     while (!is_empty(fringe))
     {
         point *point_to_expand = dequeue(fringe);
@@ -163,9 +169,13 @@ point *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, in
 
         if (point_to_expand->x == end_x && point_to_expand->y == end_y)
         {
-            printf("Path found!\n");
+            end_time = clock();
+            sol->time = elapsed_time;
+            sol->points_explored = explored_points;
+            elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+            printf("Path found in %fs\n", elapsed_time);
             printf("Explored %d points\n", explored_points);
-            trace_path(point_to_expand, start_x, start_y);
+            // trace_path(point_to_expand, start_x, start_y);
             destroy_priority_queue(fringe);
             for (int i = 0; i < rows; i++)
             {
@@ -174,7 +184,8 @@ point *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, in
             free(visited);
             free(start);
 
-            return point_to_expand;
+            // RETURN SOLUTION OBJECT
+            return sol;
         }
 
         expand(rows, cols, grid, point_to_expand, end_x, end_y, fringe, heuristic, visited);

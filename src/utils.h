@@ -3,7 +3,7 @@
 
 typedef struct
 {
-    double time;
+    float time;
     int points_explored;
 } solution;
 
