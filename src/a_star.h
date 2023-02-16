@@ -4,6 +4,15 @@
 #include "priority_queue.h"
 #include "utils.h"
 
+struct solution
+{
+    double time;
+    int points_explored;
+    point *end;
+};
+
+typedef struct solution solution;
+
 double heuristic_euclidean(int x1, int y1, int x2, int y2);
 double heuristic_manhattan(int x1, int y1, int x2, int y2);
 double calculate_heuristic(int x1, int y1, int x2, int y2, char *heuristic);

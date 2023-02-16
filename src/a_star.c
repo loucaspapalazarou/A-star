@@ -6,7 +6,16 @@
 #include "priority_queue.h"
 #include "utils.h"
 
-#define MAX_PATH_LEN 100
+#define MAX_PATH_LEN 100000
+
+struct solution
+{
+    double time;
+    int points_explored;
+    point *end;
+};
+
+typedef struct solution solution;
 
 double heuristic_euclidean(int x1, int y1, int x2, int y2)
 {
@@ -173,8 +182,6 @@ solution *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y,
             sol->points_explored = explored_points;
             elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
             sol->time = elapsed_time;
-            printf("Path found in %fs\n", elapsed_time);
-            printf("Explored %d points\n", explored_points);
             // trace_path(point_to_expand, start_x, start_y);
             destroy_priority_queue(fringe);
             for (int i = 0; i < rows; i++)
