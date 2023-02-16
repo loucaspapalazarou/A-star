@@ -1,17 +1,8 @@
 # #!/bin/bash
 gcc src/*.c -lm
-
 for file in $(ls inputs | sort -n); do
     echo "************ Running for file $file ************"
     ./a.out "inputs/$file"
 done
-
 rm a.out
-
-
-# # Loop through all the files in alphabetical order
-# for file in $(ls | sort -n); do
-#     # Do something with the file, e.g. print its name
-#     echo "$file"
-# done
 
