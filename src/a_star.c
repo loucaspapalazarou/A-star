@@ -133,7 +133,7 @@ void trace_path(point *end, int start_x, int start_y)
     printf("]\n");
 }
 
-solution *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic)
+solution *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y, int end_x, int end_y, char *heuristic, int print_path_trace)
 {
     if (strcmp(heuristic, "eucledian") != 0 && strcmp(heuristic, "manhattan") != 0)
     {
@@ -182,7 +182,10 @@ solution *a_star_solve(int rows, int cols, int **grid, int start_x, int start_y,
             sol->points_explored = explored_points;
             elapsed_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
             sol->time = elapsed_time;
-            // trace_path(point_to_expand, start_x, start_y);
+            if (print_path_trace == 1)
+            {
+                trace_path(point_to_expand, start_x, start_y);
+            }
             destroy_priority_queue(fringe);
             for (int i = 0; i < rows; i++)
             {
