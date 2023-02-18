@@ -1,6 +1,5 @@
 # A-star
 
 ### TODO
-- Fill reamde
-- Comments
-- Make report
+- Make README nicer
+- Add comments

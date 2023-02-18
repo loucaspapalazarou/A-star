@@ -18,14 +18,14 @@ int main(int argc, char *argv[])
 
     solution *s_euc, *s_manh;
 
-    s_euc = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian", 0);
+    s_euc = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian", 1);
     if (s_euc != NULL)
     {
         printf("Path found in %fs\n", s_euc->time);
         printf("Explored %d points\n", s_euc->points_explored);
     }
     printf("\n");
-    s_manh = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan", 0);
+    s_manh = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan", 1);
     if (s_manh != NULL)
     {
         printf("Path found in %fs\n", s_manh->time);
