@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     if (argc != 2)
     {
-        printf("Wrong amount of arguments");
+        printf("Wrong amount of arguments\n");
         exit(1);
     }
 
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     }
     printf("\n");
 
-    append_solution_to_csv(rows, cols, s_euc, s_manh);
+    append_solution_to_csv(rows, cols, s_euc->time, s_euc->points_explored, s_manh->time, s_manh->points_explored);
 
     return 0;
 }
