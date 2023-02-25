@@ -40,7 +40,7 @@ void print_grid(int rows, int cols, int **grid)
     }
 }
 
-void append_solution_to_csv(int rows, int cols, float time1, float time2, int steps1, int steps2)
+void append_solution_to_csv(int rows, int cols, double time1, int steps1, double time2, int steps2)
 {
     FILE *f = fopen("results.csv", "a"); // open the file in append mode
     if (f == NULL)
@@ -56,8 +56,7 @@ void append_solution_to_csv(int rows, int cols, float time1, float time2, int st
     }
 
     // write the fields of the solution struct to the file
-    fprintf(f, "%dx%d,%.6f,%d,", rows, cols, time1, steps1);
-    fprintf(f, "%.6f,%d\n", time2, steps2);
+    fprintf(f, "%dx%d,%.6f,%d,%.6f,%d\n", rows, cols, time1, steps1, time2, steps2);
 
     fclose(f); // close the file
 }

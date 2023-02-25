@@ -16,16 +16,17 @@ int main(int argc, char *argv[])
     int start_x, start_y, end_x, end_y;
     read_file(argv[1], &rows, &cols, &grid, &start_x, &start_y, &end_x, &end_y);
 
-    solution *s_euc, *s_manh;
+    solution *s_euc = NULL;
+    solution *s_manh = NULL;
 
-    s_euc = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian", 1);
+    s_euc = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "eucledian", 0);
     if (s_euc != NULL)
     {
         printf("Path found in %fs\n", s_euc->time);
         printf("Explored %d points\n", s_euc->points_explored);
     }
     printf("\n");
-    s_manh = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan", 1);
+    s_manh = a_star_solve(rows, cols, grid, start_x, start_y, end_x, end_y, "manhattan", 0);
     if (s_manh != NULL)
     {
         printf("Path found in %fs\n", s_manh->time);

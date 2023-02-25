@@ -64,7 +64,7 @@ void expand(int rows, int cols, int **grid, point *curr_p, int end_x, int end_y,
         double h = calculate_heuristic(x, y - 1, end_x, end_y, heuristic);
         p1->x = x;
         p1->y = y - 1;
-        p1->cost = h + curr_p->cost;
+        p1->cost = h + curr_p->cost + 1;
         p1->previous = curr_p;
         enqueue(fringe, p1);
     }
@@ -76,7 +76,7 @@ void expand(int rows, int cols, int **grid, point *curr_p, int end_x, int end_y,
         double h = calculate_heuristic(x, y + 1, end_x, end_y, heuristic);
         p2->x = x;
         p2->y = y + 1;
-        p2->cost = h + curr_p->cost;
+        p2->cost = h + curr_p->cost + 1;
         p2->previous = curr_p;
         enqueue(fringe, p2);
     }
@@ -88,7 +88,7 @@ void expand(int rows, int cols, int **grid, point *curr_p, int end_x, int end_y,
         double h = calculate_heuristic(x - 1, y, end_x, end_y, heuristic);
         p3->x = x - 1;
         p3->y = y;
-        p3->cost = h + curr_p->cost;
+        p3->cost = h + curr_p->cost + 1;
         p3->previous = curr_p;
         enqueue(fringe, p3);
     }
@@ -100,7 +100,7 @@ void expand(int rows, int cols, int **grid, point *curr_p, int end_x, int end_y,
         double h = calculate_heuristic(x + 1, y, end_x, end_y, heuristic);
         p4->x = x + 1;
         p4->y = y;
-        p4->cost = h + curr_p->cost;
+        p4->cost = h + curr_p->cost + 1;
         p4->previous = curr_p;
         enqueue(fringe, p4);
     }
